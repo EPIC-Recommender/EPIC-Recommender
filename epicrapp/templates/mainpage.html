@@ -1,0 +1,81 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the E.P.I.C. Recommender </title>   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+{% include 'header.html'%}
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Welcome to the E.P.I.C. Recommender</h1>
+        
+        <h4 class="text-center mb-4">Discover Any Content Here!</h4>
+        <!-- Buttons for Movies, Games, and Series -->
+        <div class="text-center mb-4">
+            <button class="btn btn-primary mr-2" onclick="getRecommendations('movie')">Movies</button>
+            <button class="btn btn-primary mr-2" onclick="getRecommendations('game')">Games</button>
+            <button class="btn btn-primary" onclick="getRecommendations('series')">Series</button>
+        </div>
+        
+        <!-- Recommendations Section -->
+        <div id="recommendations" class="mt-4">
+            <!-- Recommendations will be displayed here -->
+        </div>
+        
+        <!-- AI Chat Input -->
+        <div class="mt-4">
+            <input type="text" class="form-control" id="chatInput" placeholder="Ask me anything...">
+        </div>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Your custom script -->
+    <script>
+        function getRecommendations(type) {
+            // AJAX request to Django backend
+            $.ajax({
+                type: 'POST',
+                url: '/get_recommendations/', // Replace with your Django URL for recommendations
+                data: { inputType: type },
+                success: function(response) {
+                    // Display recommendations
+                    $('#recommendations').html(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    
+        $('#chatInput').keypress(function(event) {
+            if (event.which === 13) { // Enter key pressed
+                var userInput = $(this).val().trim();
+                if (userInput !== '') {
+                    // Send user input to AI backend for processing
+                    sendUserInputToAI(userInput);
+                }
+                $(this).val(''); // Clear input field after sending
+            }
+        });
+    
+        function sendUserInputToAI(input) {
+            // Send user input to AI backend for processing
+            // Implement your logic here to interact with the AI
+            // Display AI response or handle accordingly
+            console.log('User input:', input);
+        }
+    </script>
+    
+    </body>
+    </html>

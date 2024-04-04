@@ -1,0 +1,24 @@
+<!--header.html file-->
+<header>
+    <div style="background-color: #faebd7; color: #29242a;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background-color: #274e13; padding: 10px 25px;">
+            <h3 style="margin: 0;">E.P.I.C. Recommender App</h3>
+            <nav>
+                <ul style="list-style-type: none; margin: 0; padding: 0; display: flex; align-items: center;">
+
+                    {% if user.is_authenticated %}
+                        <!-- Logout button -->
+                        <li style="margin-right: 10px;"><a href="/logout" style="text-decoration: none; padding: 8px 16px; background-color: #f44336; color: white; border-radius: 5px;">Logout</a></li>
+                    {% else %}
+                        <!-- Signup button -->
+                        <li style="margin-right: 10px;"><a href="/signup" style="text-decoration: none; padding: 8px 16px; background-color: #008CBA; color: white; border-radius: 5px;">Signup</a></li>
+
+                        <!-- Login button -->
+                        <li><a href="/login" style="text-decoration: none; padding: 8px 16px; background-color: #008CBA; color: white; border-radius: 5px;">Login</a></li>
+                    {% endif %}
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
