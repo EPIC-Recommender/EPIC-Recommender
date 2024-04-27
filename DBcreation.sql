@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS public.genre (
 CREATE TABLE IF NOT EXISTS public.movie
 (
     "ID" serial NOT NULL,
-    movei_awards integer,
     "Title" VARCHAR NOT NULL,
     imdb_rating integer,
     rotten_rating integer,
@@ -23,8 +22,6 @@ COMMENT ON TABLE public.movie
     IS 'contains movie details
 ';
 
-COMMENT ON COLUMN public.movie.genre
-    IS 'Separate using commas';
 
 CREATE TABLE IF NOT EXISTS public.movie_genre (
     movie_id INTEGER REFERENCES public.movie ("ID"),
@@ -49,7 +46,8 @@ CREATE TABLE IF NOT EXISTS public.movie_director
 CREATE TABLE IF NOT EXISTS public.movie_producer
 (
     movie integer NOT NULL,
-    producer integer NOT NULL
+    producer integer NOT NULL,
+    PRIMARY KEY (movie, producer)
 );
 
 CREATE TABLE IF NOT EXISTS public.movie_synopsis
@@ -75,7 +73,6 @@ COMMENT ON COLUMN public.person."DOB"
 CREATE TABLE IF NOT EXISTS public.synopsis
 (
     "ID" serial NOT NULL,
-    movie integer NOT NULL,
     synopsis VARCHAR,
     CONSTRAINT synopsis_pkey PRIMARY KEY ("ID")
 );
