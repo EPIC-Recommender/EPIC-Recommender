@@ -2,17 +2,20 @@
 -- Please log an issue at https://github.com/pgadmin-org/pgadmin4/issues/new/choose if you find any bugs, including reproduction steps.
 BEGIN;
 
+CREATE TABLE IF NOT EXISTS public.genre (
+    genre_id serial PRIMARY KEY,
+    genre_name VARCHAR NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS public.movie
 (
     "ID" serial NOT NULL,
     movei_awards integer,
-    "Title" "char" NOT NULL,
+    "Title" VARCHAR NOT NULL,
     imdb_rating integer,
     rotten_rating integer,
     meta_rating integer,
-    pg_rating "char",
-    genre "char"[],
+    pg_rating VARCHAR,
     CONSTRAINT "ID" PRIMARY KEY ("ID")
 );
 
@@ -22,6 +25,12 @@ COMMENT ON TABLE public.movie
 
 COMMENT ON COLUMN public.movie.genre
     IS 'Separate using commas';
+
+CREATE TABLE IF NOT EXISTS public.movie_genre (
+    movie_id INTEGER REFERENCES public.movie ("ID"),
+    genre_id INTEGER REFERENCES public.genre (genre_id),
+    PRIMARY KEY (movie_id, genre_id)
+);
 
 CREATE TABLE IF NOT EXISTS public.movie_actor
 (
@@ -67,7 +76,7 @@ CREATE TABLE IF NOT EXISTS public.synopsis
 (
     "ID" serial NOT NULL,
     movie integer NOT NULL,
-    synopsis "char",
+    synopsis VARCHAR,
     CONSTRAINT synopsis_pkey PRIMARY KEY ("ID")
 );
 
@@ -188,4 +197,17 @@ ALTER TABLE IF EXISTS public.award_person
     ON DELETE NO ACTION
     NOT VALID;
 
+ALTER TABLE IF EXISTS public.movie_genre
+    ADD CONSTRAINT movie_genre_movie_fkey FOREIGN KEY (movie_id)
+    REFERENCES public.movie ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.movie_genre
+    ADD CONSTRAINT movie_genre_genre_fkey FOREIGN KEY (genre_id)
+    REFERENCES public.genre (genre_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 END;
