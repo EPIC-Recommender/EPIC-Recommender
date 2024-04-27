@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS public.movie
     rotten_rating integer,
     meta_rating integer,
     pg_rating VARCHAR,
-    genre VARCHAR[],
     CONSTRAINT "ID" PRIMARY KEY ("ID")
 );
 
