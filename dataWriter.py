@@ -13,35 +13,79 @@ class DataHolder(ABC):
         self.name = name
         pass
     
+class GenreData(DataHolder):
+    """this class holds the scraped data of movies.
+       for example 
+    """
+    def __init__(self,genre=None):
+        super().__init__("movie_genre")
+        self.genre = genre
 
 class MovieData(DataHolder):
     """this class holds the scraped data of movies.
        for example 
-
     """
-    def __init__(self):
+    def __init__(self,
+                 title: str,
+                 imdb_rating: int,
+                 rotten_rating: int,
+                 meta_rating: int,
+                 pg_rating: str,
+                 ):
         super().__init__()
+        self.title = title
+        self.imdb_rating = imdb_rating
+        self.rotten_rating = rotten_rating
+        self.meta_rating = meta_rating
+        self.pg_rating = pg_rating
 
 class ActorData(DataHolder):
     """this class holds the scraped data of movies.
        for example 
     """
-    def __init__(self):
+    def __init__(self,
+                 name: str,
+                 gender: bool,
+                 nationality: str,
+                 DOB: str
+                 ):
         super().__init__("movie_actor")
-
+        self.name = name
+        self.gender = gender
+        self.nationality = nationality
+        self.DOB = DOB
+        
 class DirectorData(DataHolder):
     """this class holds the scraped data of movies.
        for example 
     """
-    def __init__(self):
+    def __init__(self,
+                 name: str,
+                 gender: bool,
+                 nationality: str,
+                 DOB: str
+                 ):
         super().__init__("movie_director")
+        self.name = name
+        self.gender = gender
+        self.nationality = nationality
+        self.DOB = DOB
 
 class ProducerData(DataHolder):
     """this class holds the scraped data of movies.
        for example 
     """
-    def __init__(self):
+    def __init__(self,
+                 name: str,
+                 gender: bool,
+                 nationality: str,
+                 DOB: str
+                 ):
         super().__init__("movie_producer")
+        self.name = name
+        self.gender = gender
+        self.nationality = nationality
+        self.DOB = DOB
 
 class PersonAwardData(DataHolder):
     """this class holds the scraped data of movies.
