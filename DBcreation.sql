@@ -2,6 +2,10 @@
 -- Please log an issue at https://github.com/pgadmin-org/pgadmin4/issues/new/choose if you find any bugs, including reproduction steps.
 BEGIN;
 
+CREATE TABLE IF NOT EXISTS public.genre (
+    genre_id serial PRIMARY KEY,
+    genre_name VARCHAR NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS public.movie
 (
@@ -22,6 +26,12 @@ COMMENT ON TABLE public.movie
 
 COMMENT ON COLUMN public.movie.genre
     IS 'Separate using commas';
+
+CREATE TABLE IF NOT EXISTS public.movie_genre (
+    movie_id INTEGER REFERENCES public.movie ("ID"),
+    genre_id INTEGER REFERENCES public.genre (genre_id),
+    PRIMARY KEY (movie_id, genre_id)
+);
 
 CREATE TABLE IF NOT EXISTS public.movie_actor
 (
@@ -188,4 +198,17 @@ ALTER TABLE IF EXISTS public.award_person
     ON DELETE NO ACTION
     NOT VALID;
 
+ALTER TABLE IF EXISTS public.movie_genre
+    ADD CONSTRAINT movie_genre_movie_fkey FOREIGN KEY (movie_id)
+    REFERENCES public.movie ("ID") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.movie_genre
+    ADD CONSTRAINT movie_genre_genre_fkey FOREIGN KEY (genre_id)
+    REFERENCES public.genre (genre_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 END;
