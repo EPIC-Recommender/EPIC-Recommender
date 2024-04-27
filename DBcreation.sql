@@ -7,12 +7,12 @@ CREATE TABLE IF NOT EXISTS public.movie
 (
     "ID" serial NOT NULL,
     movei_awards integer,
-    "Title" "char" NOT NULL,
+    "Title" VARCHAR NOT NULL,
     imdb_rating integer,
     rotten_rating integer,
     meta_rating integer,
-    pg_rating "char",
-    genre "char"[],
+    pg_rating VARCHAR,
+    genre VARCHAR[],
     CONSTRAINT "ID" PRIMARY KEY ("ID")
 );
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS public.synopsis
 (
     "ID" serial NOT NULL,
     movie integer NOT NULL,
-    synopsis "char",
+    synopsis VARCHAR,
     CONSTRAINT synopsis_pkey PRIMARY KEY ("ID")
 );
 
