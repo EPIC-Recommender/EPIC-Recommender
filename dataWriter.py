@@ -5,6 +5,8 @@ class MovieDatabaseWriter:
     """this class should not be used for more than one movie after Inserting
        a movie and the other data for that movie you should create another object
        to add a new movie
+       !! use insert_movie first every time other MnM realitons will use the inserted movies id 
+       see example in dataWriter.py main function
     """
     def __init__(self, dbname: str, user: str, password: str, host: str = 'localhost', port: int = 5432) -> None:
 
@@ -23,13 +25,13 @@ class MovieDatabaseWriter:
         self.cur.close()
         self.conn.close()
 
-    def insert_movie(self, title: str, movei_awards: Optional[int] = None, imdb_rating: Optional[float] = None,
+    def insert_movie(self, title: str, imdb_rating: Optional[float] = None,
                      rotten_rating: Optional[float] = None, meta_rating: Optional[float] = None, pg_rating: Optional[str] = None,
-                     genre: Optional[List[str]] = None) -> int:
+                     ) -> int:
 
-        sql = """INSERT INTO public.movie ("Title", movei_awards, imdb_rating, rotten_rating, meta_rating, pg_rating, genre)
-                 VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING "ID";"""
-        values = (title, movei_awards, imdb_rating, rotten_rating, meta_rating, pg_rating, genre)
+        sql = """INSERT INTO public.movie ("Title", imdb_rating, rotten_rating, meta_rating, pg_rating)
+                 VALUES (%s, %s, %s, %s, %s) RETURNING "ID";"""
+        values = (title,imdb_rating, rotten_rating, meta_rating, pg_rating)
         self.cur.execute(sql, values)
         self.current_movie_id = self.get_last_inserted_id()
         self.conn.commit()
@@ -151,7 +153,9 @@ class MovieDatabaseWriter:
 if __name__ == "__main__":
 # Example usage:
     writer = MovieDatabaseWriter(dbname='EpicDB', user='postgres', password='')
-# Inserting a movie and retrieving its ID
+# Inserting a movie and retrieving its ID # saving the movie id is not required to insert other table
+# the object keeps movie id  any ways
+
     movie_id = writer.insert_movie(title='The Shawshank Redemption', imdb_rating=9)
 # Inserting an actor
     writer.insert_actor(name='Tim Robbins', dob='1958-10-16')
