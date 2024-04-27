@@ -1,0 +1,15 @@
+{% include "header.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies List</title>
+</head>
+<body>
+    <h1>Movies List</h1>
+    <ul>
+        {% for movie in object_list %}
+            <li><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
