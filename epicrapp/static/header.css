@@ -1,0 +1,48 @@
+/* Header styles */
+#main-header {
+    background-color: #faebd7;
+    color: #29242a;
+}
+
+/* Inner container styles */
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #274e13;
+    padding: 10px 25px;
+}
+
+/* Logo styles */
+.logo-container h3 {
+    margin: 0;
+    color: white; /* Ensuring the logo text color is white */
+}
+
+/* Navigation styles */
+.navigation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation item styles */
+.navigation ul li {
+    margin-right: 10px;
+}
+
+/* Logout button styles */
+.navigation ul li:last-child a {
+    background-color: #f44336;
+}
+
+/* Signup and Login button styles */
+.navigation ul li a {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #008CBA;
+    color: white;
+    border-radius: 5px;
+}

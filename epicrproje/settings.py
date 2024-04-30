@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
     'epicrapp',
 ]
 
@@ -78,9 +79,9 @@ WSGI_APPLICATION = 'epicrproje.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': f'{DBconnection.NAME}', #your_database_name
+        'NAME': 'epicr', #your_database_name
         'USER': 'postgres', #your_database_user
-        'PASSWORD': f'{DBconnection.PASSWORD}', #your_database_password
+        'PASSWORD': '1234', #your_database_password
         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
     }
@@ -122,6 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# STATICFILES_DIRS = [
+#     ',
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
