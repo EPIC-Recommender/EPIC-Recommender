@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import DBconnection
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'epicr', #your_database_name
         'USER': 'postgres', #your_database_user
-        'PASSWORD': '1234', #your_database_password
+        'PASSWORD': '1231', #your_database_password
         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
         'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
     }

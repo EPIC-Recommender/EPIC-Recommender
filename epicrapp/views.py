@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .forms import MovieForm
 
 def mainpage(request):
     return render(request, 'mainpage.html')
@@ -77,3 +78,24 @@ def login_view(request):
             return redirect('login') + '?error=True'  # Redirect back to login page with error parameter
     else:
         return render(request, 'login.html')
+    
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('movie_list')
+    else:
+        form = MovieForm()
+    return render(request, 'movie_form.html', {'form': form})
+
+def edit_movie(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
+    if request.method == 'POST':
+        form = MovieForm(request.POST, instance=movie)
+        if form.is_valid():
+            form.save()
+            return redirect('movie_detail', pk=pk)  # Redirect to movie detail page after editing
+    else:
+        form = MovieForm(instance=movie)
+    return render(request, 'edit_movie.html', {'form': form, 'movie': movie})

@@ -15,11 +15,16 @@
                     <!-- Logout button -->
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 {% else %}
-                    <!-- Signup button -->
-                    <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+                    <!-- Main Page button -->
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Main Page</a></li>
 
                     <!-- Login button -->
                     <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+
+                    <!-- Signup button -->
+                    <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+
+
                 {% endif %}
             </ul>
         </div>
