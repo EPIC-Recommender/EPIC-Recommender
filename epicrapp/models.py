@@ -1,4 +1,28 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser , Permission , Group
+
+class CustomUser(AbstractUser):
+    # Add any additional fields here
+    age = models.PositiveIntegerField(blank=True, null=True)
+
+    class Meta:
+        permissions = (("view_user", "Can view user"),)
+
+    # Override the groups field
+    groups = models.ManyToManyField(
+        Group,
+        related_name='customuser_set',
+        blank=True,
+        help_text='The groups this user belongs to.',
+    )
+
+    # Override the user_permissions field
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='customuser_set',
+        blank=True,
+        help_text='Specific permissions for this user.',
+    )
 
 class Movie(models.Model):
     ID = models.AutoField(primary_key=True, db_column='ID')
@@ -24,3 +48,66 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.genre_name
+    
+    
+    
+class MovieActor(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    actor = models.ForeignKey('Person', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('movie', 'actor')
+
+class MovieAward(models.Model):
+    award = models.ForeignKey('Award', on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+class MovieDirector(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    director = models.ForeignKey('Person', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('movie', 'director')
+
+class MovieGenre(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('movie', 'genre')
+
+class MovieProducer(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    producer = models.ForeignKey('Person', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('movie', 'producer')
+
+class MovieSynopsis(models.Model):
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
+    synopsis = models.ForeignKey('Synopsis', on_delete=models.CASCADE)
+
+class Person(models.Model):
+    ID = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    gender = models.BooleanField(null=True)
+    nationality = models.CharField(max_length=255, null=True)
+    DOB = models.DateField(null=True)
+
+    def __str__(self):
+        return self.name
+
+class Synopsis(models.Model):
+    ID = models.AutoField(primary_key=True)
+    synopsis = models.TextField()
+
+    def __str__(self):
+        return self.synopsis
+
+class Award(models.Model):
+    ID = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    date = models.DateField()
+
+    def __str__(self):
+        return self.name

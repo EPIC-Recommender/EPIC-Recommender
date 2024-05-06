@@ -1,5 +1,7 @@
 from django import forms
 from .models import Movie
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
 
 class MovieForm(forms.ModelForm):
     class Meta:
@@ -12,3 +14,14 @@ class MovieForm(forms.ModelForm):
             'meta_rating': forms.NumberInput(attrs={'class': 'form-control'}),
             'pg_rating': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password1', 'password2']  # Add more fields as needed
+
+class LoginForm(AuthenticationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
