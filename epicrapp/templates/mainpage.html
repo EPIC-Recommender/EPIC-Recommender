@@ -7,12 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to the E.P.I.C. Recommender </title>   
-    <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-    <!-- <!-- Custom CSS -->
-    <!-- <style> -->
-    <!--     /* Add your custom styles here */ -->
-    <!-- </style> -->
 </head>
 {% include 'header.html'%}
 <body>
@@ -21,39 +15,66 @@
         <h1 class="text-center mb-4">Welcome to the E.P.I.C. Recommender</h1>
         
         <h4 class="text-center mb-4">Discover Any Content Here!</h4>
-        <!-- Buttons for Movies, Games, and Series -->
+        <!-- Button for Movies -->
         <div class="text-center mb-4">
-            <button class="btn btn-primary mr-2" onclick="window.location.href='/movies'">Movies</button>
-            <button class="btn btn-primary mr-2" onclick="getRecommendations('game')">Games</button>
-            <button class="btn btn-primary" onclick="getRecommendations('series')">Series</button>
+            <button class="btn btn-primary btn-lg btn-block" onclick="window.location.href='/movies'">Discover All Movies in Our Database</button>
+        </div>
+
+<!-- Dropdown for Genres -->
+<div class="form-group">
+    <label for="genreSelect">Select Genre:</label>
+    <select class="form-control" id="genreSelect">
+        <option value="">-- Select Genre --</option>
+        {% for genre in genres %}
+            <option value="{{ genre.genre_id }}">{{ genre.genre_name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Dropdown for Favorite Movies -->
+<div class="form-group">
+    <label for="favoriteMovieSelect">Select Favorite Movie:</label>
+    <select class="form-control" id="favoriteMovieSelect">
+        <option value="">-- Select Favorite Movie --</option>
+        {% for movie in movies %}
+            <option value="{{ movie.ID }}">{{ movie.title }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+        <!-- Button to Display Similar Movies -->
+        <div class="text-center mb-4">
+            <button class="btn btn-primary" onclick="showSimilarMovies()">Show Similar Movies</button>
+        </div>
+
+        <!-- Display Similar Movies -->
+        <div id="similarMovies" class="text-center">
+            <!-- Similar movies will be displayed here -->
         </div>
         
-        <!-- Recommendations Section -->
-        <div id="recommendations" class="mt-4">
-            <!-- Recommendations will be displayed here -->
-        </div>
-        
-        <!-- AI Chat Input -->
-        <div class="mt-4">
-            <input type="text" class="form-control" id="chatInput" placeholder="Ask me anything...">
-        </div>
     </div>
-    
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+     <!-- jQuery -->
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+     <!-- Bootstrap JS -->
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+     <!-- Select2 JS -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <!-- Your custom script -->
     <script>
-        function getRecommendations(type) {
-            // AJAX request to Django backend
+        function showSimilarMovies() {
+            var genreId = document.getElementById('genreSelect').value;
+            var favoriteMovieId = document.getElementById('favoriteMovieSelect').value;
+
+            // AJAX request to Django backend to get similar movies based on genre and favorite movie
             $.ajax({
                 type: 'POST',
-                url: '/get_recommendations/', // Replace with your Django URL for recommendations
-                data: { inputType: type },
+                url: '/get_similar_movies/',
+                data: { genreId: genreId, favoriteMovieId: favoriteMovieId },
                 success: function(response) {
-                    // Display recommendations
-                    $('#recommendations').html(response);
+                    // Display similar movies
+                    $('#similarMovies').html(response);
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
@@ -61,25 +82,7 @@
                 }
             });
         }
-    
-        $('#chatInput').keypress(function(event) {
-            if (event.which === 13) { // Enter key pressed
-                var userInput = $(this).val().trim();
-                if (userInput !== '') {
-                    // Send user input to AI backend for processing
-                    sendUserInputToAI(userInput);
-                }
-                $(this).val(''); // Clear input field after sending
-            }
-        });
-    
-        function sendUserInputToAI(input) {
-            // Send user input to AI backend for processing
-            // Implement your logic here to interact with the AI
-            // Display AI response or handle accordingly
-            console.log('User input:', input);
-        }
     </script>
     
-    </body>
-    </html>
+</body>
+</html>
