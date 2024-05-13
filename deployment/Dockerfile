@@ -23,8 +23,19 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Expose PostgreSQL port
+# Install Python dependencies using apt-get
+RUN apt-get update && apt-get install -y \
+    python3-django \
+    python3-psycopg2 \
+    python3-django-bootstrap5 \
+    python3-pytest \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Expose PostgreSQL and Djangoj
+# port
 EXPOSE 5432
+EXPOSE 8000
 
 # Start PostgreSQL service
 CMD ["service", "postgresql", "start"]
@@ -32,9 +43,9 @@ CMD ["service", "postgresql", "start"]
 # Set up pipenv environment (replace with your own setup commands)
 RUN git clone https://github.com/EPIC-Recommender/EPIC-Recommender.git
 WORKDIR /EPIC-Recommender
+#TODO: dont forget remove the bellow line for production
 RUN git checkout docker
 #COPY Pipfile Pipfile.lock
-RUN pipenv install --deploy --system
 
 # Optionally, you can add a command to run your application or shell
 # CMD ["python", "app.py"]
