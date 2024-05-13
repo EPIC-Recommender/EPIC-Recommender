@@ -34,7 +34,7 @@ RUN git clone https://github.com/EPIC-Recommender/EPIC-Recommender.git
 WORKDIR /EPIC-Recommender
 RUN git checkout docker
 #COPY Pipfile Pipfile.lock
-RUN pipenv install --deploy --ignore-pipfile
+RUN pipenv install --deploy --system
 
 # Optionally, you can add a command to run your application or shell
 # CMD ["python", "app.py"]
