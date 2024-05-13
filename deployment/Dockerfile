@@ -32,6 +32,7 @@ CMD ["service", "postgresql", "start"]
 # Set up pipenv environment (replace with your own setup commands)
 RUN git clone https://github.com/EPIC-Recommender/EPIC-Recommender.git
 WORKDIR /EPIC-Recommender
+RUN git checkout docker
 #COPY Pipfile Pipfile.lock
 RUN pipenv install --deploy --ignore-pipfile
 
