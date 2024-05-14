@@ -41,9 +41,10 @@ class Movie(models.Model):
     
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
-    genre_name = models.CharField(max_length=100)
+    genre_name = models.CharField()
 
     class Meta:
+        managed = False
         db_table = 'genre'
 
     def __str__(self):
