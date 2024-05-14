@@ -8,45 +8,49 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     postgresql \
     postgresql-contrib \
+    postgresql-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pipenv
-RUN apt-get update && apt-get install -y \
-    pipenv \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-#Install git
+# Install git
 RUN apt-get update && apt-get install -y \
     git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies using apt-get
+# Install Python and pip
 RUN apt-get update && apt-get install -y \
-    python3-django \
-    python3-psycopg2 \
-    python3-django-bootstrap5 \
-    python3-pytest \
+    python3 \
+    python3-pip \
+    python3-venv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Expose PostgreSQL and Djangoj
-# port
+RUN apt-get update && apt-get install -y nano \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Expose PostgreSQL and Django ports
 EXPOSE 5432
 EXPOSE 8000
 
 # Start PostgreSQL service
-CMD ["service", "postgresql", "start"]
+RUN service postgresql start && su - postgres -c 'psql -c "CREATE DATABASE EpicDB;"' \
 
-# Set up pipenv environment (replace with your own setup commands)
+# Clone repository and install Python dependencies
 RUN git clone https://github.com/EPIC-Recommender/EPIC-Recommender.git
 WORKDIR /EPIC-Recommender
-#TODO: dont forget remove the bellow line for production
 RUN git checkout docker
-#COPY Pipfile Pipfile.lock
+COPY requirements.txt requirements.txt
+COPY DBconnection-deployment.py DBconnection.py
 
+#prepare database
+
+RUN python3 -m venv venv
+RUN . venv/bin/activate && pip install -r requirements.txt
+#RUN . venv/bin/activate && python3 manage.py migrate
+#DBcreation
 # Optionally, you can add a command to run your application or shell
 # CMD ["python", "app.py"]
-
+CMD service postgresql start
