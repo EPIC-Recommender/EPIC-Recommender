@@ -35,7 +35,6 @@ COPY DBconnection-deployment.py DBconnection.py
 # Prepare virtual environment and install Python dependencies
 RUN python3 -m venv venv
 RUN . venv/bin/activate && pip install -r requirements.txt
-
 # Optionally, you can create database, users, and tables here
 # Example:
 #RUN . venv/bin/activate && python3 manage.py migrate
@@ -44,4 +43,5 @@ RUN . venv/bin/activate && pip install -r requirements.txt
 
 # Optionally, you can add a command to run your application
 # CMD ["python", "app.py"]
+CMD service postgresql start
 
