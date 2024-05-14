@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the E.P.I.C. Recommender </title>   
+    <title>Welcome to the E.P.I.C. Recommender </title> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />  
 </head>
 {% include 'header.html'%}
 <body>
@@ -20,23 +21,12 @@
             <button class="btn btn-primary btn-lg btn-block" onclick="window.location.href='/movies'">Discover All Movies in Our Database</button>
         </div>
 
-<!-- Dropdown for Genres -->
-<div class="form-group">
-    <label for="genreSelect">Select Genre:</label>
-    <select class="form-control" id="genreSelect">
-        <option value="">-- Select Genre --</option>
-        {% for genre in genres %}
-            <option value="{{ genre.genre_id }}">{{ genre.genre_name }}</option>
-        {% endfor %}
-    </select>
-</div>
-
 <!-- Dropdown for Favorite Movies -->
 <div class="form-group">
     <label for="favoriteMovieSelect">Select Favorite Movie:</label>
     <select class="form-control" id="favoriteMovieSelect">
         <option value="">-- Select Favorite Movie --</option>
-        {% for movie in movies %}
+        {% for movie in movies|dictsort:"title" %}
             <option value="{{ movie.ID }}">{{ movie.title }}</option>
         {% endfor %}
     </select>
@@ -53,35 +43,62 @@
         </div>
         
     </div>
-
-
      <!-- jQuery -->
-     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
      <!-- Bootstrap JS -->
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
      <!-- Select2 JS -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <!-- Your custom script -->
+    <!-- Your custom script -->
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on the favorite movie dropdown
+            $('#favoriteMovieSelect').select2({
+                placeholder: 'Search for a movie',
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+
     <script>
         function showSimilarMovies() {
-            var genreId = document.getElementById('genreSelect').value;
-            var favoriteMovieId = document.getElementById('favoriteMovieSelect').value;
-
-            // AJAX request to Django backend to get similar movies based on genre and favorite movie
-            $.ajax({
-                type: 'POST',
-                url: '/get_similar_movies/',
-                data: { genreId: genreId, favoriteMovieId: favoriteMovieId },
-                success: function(response) {
-                    // Display similar movies
-                    $('#similarMovies').html(response);
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error(xhr.responseText);
-                }
-            });
+            var selectedMovieId = $('#favoriteMovieSelect').val();
+            if (selectedMovieId) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/get_recommendations/',
+                    data: {
+                        selected_movie_id: selectedMovieId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}' // Add this line to handle CSRF protection
+                    },
+                    success: function(response) {
+                        var similarMovies = response.recommendations;
+                        var similarMoviesHtml = '<h4>Similar Movies:</h4><ul>';
+                        similarMovies.forEach(function(movie) {
+                            similarMoviesHtml += '<li>' + movie.title + '</li>';
+                        });
+                        similarMoviesHtml += '</ul>';
+                        $('#similarMovies').html(similarMoviesHtml);
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            } else {
+                alert('Please select a favorite movie.');
+            }
         }
+    
+        $(document).ready(function() {
+            // Initialize Select2 on the favorite movie dropdown
+            $('#favoriteMovieSelect').select2({
+                placeholder: 'Search for a movie',
+                allowClear: true,
+                width: '100%'
+            });
+        });
     </script>
     
 </body>

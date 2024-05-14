@@ -7,6 +7,64 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import MovieForm, SignUpForm, LoginForm
+from . config import AI_API_KEY
+import requests
+import json 
+from django.http import JsonResponse
+
+def main(request):
+    movies = Movie.objects.all()  # Retrieve all movies from the database
+    return render(request, 'main.html', {'movies': movies})
+
+def get_recommendations(request):
+    if request.method == 'POST':
+        selected_movie_id = request.POST.get('selected_movie_id')
+        
+        # Retrieve the selected movie object after obtaining its ID
+        selected_movie = Movie.objects.get(ID=selected_movie_id)  # Adjusted here
+        
+        # Gather all movie information including genres
+        all_movies_data = []
+        for movie in Movie.objects.all():
+            # Retrieve genres associated with the current movie
+            genres = Genre.objects.filter(moviegenre__movie=movie)
+            genre_names = [genre.genre_name for genre in genres]
+            all_movies_data.append({
+                'title': movie.title,
+                'genres': genre_names,
+                'imdb_rating': movie.imdb_rating,
+                'rotten_rating': movie.rotten_rating,
+                'meta_rating': movie.meta_rating
+            })
+        
+        # Send movie data to AI service
+        ai_url = 'AI_SERVICE_URL'
+        headers = {'Authorization': 'Bearer ' + AI_API_KEY, 'Content-Type': 'application/json'}
+        data = {'selected_movie': selected_movie.__dict__, 'all_movies': all_movies_data}
+        response = requests.post(ai_url, headers=headers, data=json.dumps(data))
+        
+        if response.status_code == 200:
+            recommendations = response.json()
+            return JsonResponse({'recommendations': recommendations})
+        else:
+            return JsonResponse({'error': 'Failed to get recommendations from AI service'}, status=500)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+        
+def get_similar_movies(selected_movie_id):
+    selected_movie = Movie.objects.get(id=selected_movie_id)
+    # Placeholder logic to fetch similar movies based on selected_movie
+    similar_movies = Movie.objects.filter(genre=selected_movie.genre, rating__gte=selected_movie.rating - 0.5, rating__lte=selected_movie.rating + 0.5).exclude(id=selected_movie.id)[:5]
+    return similar_movies
+
+def mainpage(request):
+    # Assuming movie_id is obtained from the request
+    movie_id = request.GET.get('movie_id')
+    similar_movies = get_similar_movies(movie_id)
+    return render(request, 'mainpage.html', {'similar_movies': similar_movies})
+
+
 
 def mainpage(request):
     return render(request, 'mainpage.html')
