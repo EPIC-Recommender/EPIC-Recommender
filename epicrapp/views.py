@@ -21,27 +21,41 @@ def get_recommendations(request):
         selected_movie_id = request.POST.get('selected_movie_id')
         
         # Retrieve the selected movie object after obtaining its ID
-        selected_movie = Movie.objects.get(ID=selected_movie_id)  # Adjusted here
+        selected_movie = Movie.objects.get(ID=selected_movie_id)  # Use 'ID' instead of 'id'
         
         # Gather all movie information including genres
         all_movies_data = []
         for movie in Movie.objects.all():
             # Retrieve genres associated with the current movie
-            genres = Genre.objects.filter(moviegenre__movie=movie)
-            genre_names = [genre.genre_name for genre in genres]
+           # genres = Genre.objects.filter(moviegenre__movie=movie)
+            #genre_names = [genre.genre_name for genre in genres]
             all_movies_data.append({
                 'title': movie.title,
-                'genres': genre_names,
+             #   'genres': genre_names,
                 'imdb_rating': movie.imdb_rating,
                 'rotten_rating': movie.rotten_rating,
                 'meta_rating': movie.meta_rating
             })
         
         # Send movie data to AI service
-        ai_url = 'AI_SERVICE_URL'
+        ai_url = 'https://api.openai.com'
         headers = {'Authorization': 'Bearer ' + AI_API_KEY, 'Content-Type': 'application/json'}
         data = {'selected_movie': selected_movie.__dict__, 'all_movies': all_movies_data}
-        response = requests.post(ai_url, headers=headers, data=json.dumps(data))
+        
+        # Serialize the selected movie object to dictionary
+        selected_movie_data = {
+            'title': selected_movie.title,
+          #  'genres': [genre.genre_name for genre in selected_movie.genres.all()],
+            'imdb_rating': selected_movie.imdb_rating,
+            'rotten_rating': selected_movie.rotten_rating,
+            'meta_rating': selected_movie.meta_rating
+        }
+        
+        # Update data with selected movie data
+        data['selected_movie'] = selected_movie_data
+        
+        # Send the request to the AI service
+        response = requests.post(ai_url, headers=headers, json=data)  # Use json parameter to automatically serialize data
         
         if response.status_code == 200:
             recommendations = response.json()
@@ -51,11 +65,10 @@ def get_recommendations(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-        
 def get_similar_movies(selected_movie_id):
     selected_movie = Movie.objects.get(id=selected_movie_id)
     # Placeholder logic to fetch similar movies based on selected_movie
-    similar_movies = Movie.objects.filter(genre=selected_movie.genre, rating__gte=selected_movie.rating - 0.5, rating__lte=selected_movie.rating + 0.5).exclude(id=selected_movie.id)[:5]
+    similar_movies = Movie.objects.filter( imdb_rating__gte=selected_movie.imdb_rating - 0.5, imdb_rating__lte=selected_movie.imdb_rating + 0.5).exclude(id=selected_movie.id)[:5]  # Fixed filter conditions
     return similar_movies
 
 def mainpage(request):
@@ -63,7 +76,6 @@ def mainpage(request):
     movie_id = request.GET.get('movie_id')
     similar_movies = get_similar_movies(movie_id)
     return render(request, 'mainpage.html', {'similar_movies': similar_movies})
-
 
 
 def mainpage(request):
