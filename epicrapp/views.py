@@ -11,6 +11,7 @@ from . config import AI_API_KEY
 import requests
 import json 
 from django.http import JsonResponse
+from datetime import datetime
 
 def main(request):
     movies = Movie.objects.all()  # Retrieve all movies from the database
@@ -155,3 +156,31 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+def mainpage(request):
+    movies = Movie.objects.all()
+
+    # Calculate the average rating for each movie
+    for movie in movies:
+        movie.avg_rating = movie.average_rating()
+
+    # Fetch top 15 movies of all time based on average rating
+    top_movies_all_time = sorted(movies, key=lambda x: x.avg_rating, reverse=True)[:15]
+
+    # Fetch top 15 movies of the current year based on average rating
+    current_year = datetime.now().year
+    top_movies_year = sorted(
+        [movie for movie in movies if movie.release_year == current_year],
+        key=lambda x: x.avg_rating,
+        reverse=True
+    )[:15]
+
+    # Fetch last 15 added movies
+    last_added_movies = Movie.objects.order_by('-created_at')[:15]
+
+    context = {
+        'top_movies_all_time': top_movies_all_time,
+        'top_movies_year': top_movies_year,
+        'last_added_movies': last_added_movies,
+    }
+    return render(request, 'mainpage.html', context)
