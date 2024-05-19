@@ -33,8 +33,9 @@ class MovieDataHandler:
         film_cast = movie_data.get('Cast',[])
         film_rating = movie_data.get('Average_rating', -1)
         film_genres = movie_data.get('Genres', [])
+        film_imdb = movie_data.get ("IMDb_rating",-1)
 
-        self.datawriter.insert_movie(film_title,meta_rating = film_rating)
+        self.datawriter.insert_movie(film_title,meta_rating = film_rating, imdb_rating=film_imdb)
         self.datawriter.insert_synopsis(film_synopsis)
         self._insert_movie_cast(film_cast)
         self._insert_movie_genres(film_genres)
