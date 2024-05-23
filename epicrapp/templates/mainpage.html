@@ -11,6 +11,7 @@
 </head>
 {% include 'header.html'%}
 <body>
+    {% csrf_token %}
 
     <div class="container mt-5">
         <h1 class="text-center mb-4">Welcome to the E.P.I.C. Recommender</h1>
@@ -31,6 +32,24 @@
         {% endfor %}
     </select>
 </div>
+
+<form method="get">
+    <select name="movie" onchange="this.form.submit()">
+        <option value="">Select a movie</option>
+        {% for movie in movies %}
+            <option value="{{ movie.id }}">{{ movie.title }}</option>
+        {% endfor %}
+    </select>
+</form>
+{% if request.GET.movie %}
+<h2>Selected Movie Details</h2>
+{% for movie in movies %}
+    {% if movie.id|stringformat:"s" == request.GET.movie %}
+        <p>Title: {{ movie.title }}</p>
+        <p>Genre: {{ movie.genre.genre_name }}</p>
+    {% endif %}
+{% endfor %}
+{% endif %}
 
         <!-- Button to Display Similar Movies -->
         <div class="text-center mb-4">
@@ -109,42 +128,35 @@
 
     <script>
         function showSimilarMovies() {
-            var selectedMovieId = $('#favoriteMovieSelect').val();
-            if (selectedMovieId) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/get_recommendations/',
-                    data: {
-                        selected_movie_id: selectedMovieId,
-                        csrfmiddlewaretoken: '{{ csrf_token }}' // Add this line to handle CSRF protection
-                    },
-                    success: function(response) {
-                        var similarMovies = response.recommendations;
-                        var similarMoviesHtml = '<h4>Similar Movies:</h4><ul>';
-                        similarMovies.forEach(function(movie) {
-                            similarMoviesHtml += '<li>' + movie.title + '</li>';
-                        });
-                        similarMoviesHtml += '</ul>';
-                        $('#similarMovies').html(similarMoviesHtml);
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log(xhr.status + ": " + xhr.responseText);
-                    }
-                });
-            } else {
-                alert('Please select a favorite movie.');
+            const movieId = $('#favoriteMovieSelect').val();
+            if (!movieId) {
+                alert("Please select a movie.");
+                return;
             }
-        }
-    
-        $(document).ready(function() {
-            // Initialize Select2 on the favorite movie dropdown
-            $('#favoriteMovieSelect').select2({
-                placeholder: 'Search for a movie',
-                allowClear: true,
-                width: '100%'
+        
+            $.ajax({
+                url: "{% url 'get_similar_movies' %}",
+                type: "POST",
+                data: {
+                    movie_id: movieId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.movies) {
+                        let moviesHtml = "<h4>Recommended Movies:</h4>";
+                        response.movies.forEach(function(movie) {
+                            moviesHtml += `<p>${movie.title} (IMDB Rating: ${movie.imdb_rating})</p>`;
+                        });
+                        $('#similarMovies').html(moviesHtml);
+                    }
+                },
+                error: function(error) {
+                    console.error("Error fetching similar movies:", error);
+                    alert("An error occurred. Please try again.");
+                }
             });
-        });
-    </script>
+        }
+        </script>
     
 </body>
 </html>
