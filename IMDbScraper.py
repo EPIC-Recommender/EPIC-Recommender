@@ -14,16 +14,16 @@ class IMDbScraper:
     def get_movie_rating(self, movie_title):
         # IMDb search for movie
         search_url = f"{self.base_url}/find?q={urllib.parse.quote_plus(movie_title)}&s=tt"
-        print("Arama URL'si:", search_url)
+        print("Search URL:", search_url)
 
         try:
             response = requests.get(search_url, headers=self.headers)
         except requests.exceptions.RequestException as e:
-            print(f"Arama isteği başarısız oldu: {e}")
+            print(f"Search request failed: {e}")
             return None
 
         if response.status_code != 200:
-            print(f"Arama isteği başarısız oldu: {response.status_code}")
+            print(f"Search request failed: {response.status_code}")
             return None
 
         # Extract movie ID from first search result
@@ -32,7 +32,7 @@ class IMDbScraper:
         if first_result:
             movie_id = first_result['href'].split('/')[2]
         else:
-            print(f"Film '{movie_title}' için sonuç bulunamadı")
+            print(f"No result found for '{movie_title}'")
             return None
 
         movie_url = f"{self.base_url}/title/{movie_id}/"
@@ -43,11 +43,11 @@ class IMDbScraper:
         try:
             movie_page_response = requests.get(movie_url, headers=self.headers)
         except requests.exceptions.RequestException as e:
-            print(f"Film sayfasına erişim başarısız oldu: {e}")
+            print(f"Failed to access movie page: {e}")
             return None
 
         if movie_page_response.status_code != 200:
-            print(f"Film sayfasına erişim başarısız oldu: {response.status_code}")
+            print(f"Failed to access movie page: {response.status_code}")
             return None
 
         # Extract and add rating to movie data
@@ -55,7 +55,7 @@ class IMDbScraper:
         if rating is not None:
             return rating
         else:
-            print("IMDb puanı bulunamadı.")
+            print("IMDb rating not found.")
             return None
 
     def _parse_movie_page(self, html):
@@ -66,7 +66,7 @@ class IMDbScraper:
                 rating = float(rating_span.text.strip())
                 return rating
             except ValueError:
-                print(f"Film sayfasından puan alınamadı: {rating_span.text.strip()}")
+                print(f"Failed to get rating from movie page: {rating_span.text.strip()}")
                 return None
         else:
             return None
@@ -76,7 +76,7 @@ try:
     with open('10000movies.json', 'r', encoding='UTF-8') as f:
         movies_data = json.load(f)
 except UnicodeDecodeError:
-    print("JSON dosyası UTF-8 ile kodlanmamış olabilir. Farklı bir encoding deneyin.")
+    print("The JSON file may not be encoded with UTF-8. Try a different encoding.")
     exit(1)
 
 scraper = IMDbScraper()
@@ -94,4 +94,4 @@ for movie in movies_data:
 with open('UWIMDb10000.json', 'w', encoding='UTF-8') as f:
     json.dump(updated_movies_data, f, ensure_ascii=False, indent=4)
 
-print("data added on UWIMDb10000.json")
+print("Data added on UWIMDb10000.json")
