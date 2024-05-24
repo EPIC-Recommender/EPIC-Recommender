@@ -34,8 +34,9 @@ class MovieDataHandler:
         film_rating = movie_data.get('Average_rating', -1)
         film_genres = movie_data.get('Genres', [])
         film_imdb = movie_data.get ("IMDb_rating",-1)
+        BeyazPerde_rating = movie_data.get("BeyazPerde_rating",-1)
 
-        self.datawriter.insert_movie(film_title,meta_rating = film_rating, imdb_rating=film_imdb)
+        self.datawriter.insert_movie(film_title,meta_rating = film_rating, imdb_rating=film_imdb,rotten_rating=BeyazPerde_rating)
         self.datawriter.insert_synopsis(film_synopsis)
         self._insert_movie_cast(film_cast)
         self._insert_movie_genres(film_genres)
@@ -60,7 +61,7 @@ class MovieDataHandler:
 if __name__ == "__main__":
     # Example usage
     writer = dataWriter.MovieDatabaseWriter(DBNAME,USER,PASSWORD)
-    handler = MovieDataHandler('10000movies.json',writer)
+    handler = MovieDataHandler('AllFilms.json',writer)
     handler.process_movies()
     print(handler.insertedMovieCount)
 

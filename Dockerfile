@@ -52,12 +52,12 @@ RUN . venv/bin/activate && pip3 install gunicorn
 RUN service postgresql start && \
     . venv/bin/activate && python3 jsonToDB.py
 
-RUN . venv/bin/activate && python3 manage.py migrate
-RUN . venv/bin/activate && python manage.py createsuperuser \
-    --noinput \
-    --username=$DJANGO_SUPERUSER_USERNAME \
-    --email=$DJANGO_SUPERUSER_EMAIL \
-    --password=$DJANGO_SUPERUSER_PASSWORD \
+RUN service postgresql start && . venv/bin/activate && python3 manage.py migrate
+# RUN service postgresql start && . venv/bin/activate && python manage.py createsuperuser \
+#     --noinput \
+#     --username=$DJANGO_SUPERUSER_USERNAME \
+#     --email=$DJANGO_SUPERUSER_EMAIL \
+#     --password=$DJANGO_SUPERUSER_PASSWORD \
 # add django super user creation code here
 
 # Optionally, you can add commands to initialize the database, create users, etc.
