@@ -1,0 +1,84 @@
+/* main.css file */
+
+body {
+    background: linear-gradient(to bottom, #F5DEB3 40%, #FFEFD5);
+    min-height: 100vh;
+    margin: 0;
+    color: black; 
+}
+
+h1 {
+    text-align: center; 
+    font-family: "Arial", sans-serif; 
+    font-size: 2.5em; 
+    color: #333; 
+    margin: 50px 0; 
+    text-shadow: 1px 1px 2px #ccc; 
+}
+
+h4 {
+    text-align: center; 
+    font-family: "Arial", sans-serif; 
+    font-size: 1.5em; 
+    color: #333; 
+    margin-bottom: 30px; 
+    text-shadow: 1px 1px 2px #ccc; 
+}
+
+p {
+    
+    font-family: "Arial", sans-serif;   
+    color: #333; 
+    margin: 50px 0; 
+    text-shadow: 1px 1px 2px #ccc; 
+
+}
+
+.container {
+    max-width: 900px; 
+    margin: 20px auto;
+    padding: 20px;
+    background: linear-gradient(to top, #F5DEB3 80%, #FFEFD5);
+    color: #29242a;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    margin-bottom: 10px;
+}
+
+.card {
+    margin-bottom: 20px;
+    background: linear-gradient(to top, #F5DEB3 20%, #FFEFD5);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.card-title a {
+    color: #007bff; /* Blue link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.card-title a:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+.btn-display-similar {
+    margin-top: 20px; /* Add some margin to the top */
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .models {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

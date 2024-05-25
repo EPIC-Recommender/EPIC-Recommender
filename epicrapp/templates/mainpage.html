@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to the E.P.I.C. Recommender</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 {% include 'header.html' %}
@@ -22,29 +24,30 @@
             <button class="btn btn-primary btn-lg btn-block" onclick="window.location.href='/movies'">Discover All Movies in Our Database</button>
         </div>
 
-        <!-- Dropdown for Favorite Movies -->
-<div class="form-group">
-    <label for="favoriteMovieSelect">Select Favorite Movie:</label>
-    <select class="form-control" id="favoriteMovieSelect">
-        <option value="">-- Select Favorite Movie --</option>
-        {% for movie in movies %}
-            <option value="{{ movie.pk }}">{{ movie.title }}</option>
-        {% endfor %}
-    </select>
-</div>
+        <!-- Dropdown for Movie Search -->
+        <div class="form-group">
+            <label for="favoriteMovieSelect">Select a movie to get a similar recommendation:</label>
+            <select class="form-control" id="favoriteMovieSelect">
+                <option value="">-- Select Favorite Movie --</option>
+                {% for movie in movies %}
+                    <option value="{{ movie.pk }}">{{ movie.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
 
         <!-- Button to Display Similar Movies -->
         <div class="text-center mb-4">
-            <button class="btn btn-primary" onclick="showSimilarMovies()">Show Similar Movies</button>
+            <button class="btn btn-primary btn-display-similar" onclick="showSimilarMovies()">Show Similar Movies</button>
         </div>
+
 
         <!-- Display Similar Movies -->
         <div id="similarMovies" class="text-center">
             <!-- Similar movies will be displayed here -->
         </div>
         
-    </div>
+        </div>
     
         <!-- Top 15 Movies of All Time -->
         <h2 class="text-center mt-5">Top 15 Movies of All Time</h2>
@@ -90,7 +93,7 @@
                 </div>
             {% endfor %}
         </div>
-        
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap JS -->
