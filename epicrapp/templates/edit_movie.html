@@ -1,5 +1,8 @@
+<!-- edit_movie.html -->
 {% include "header.html" %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'movieform.css' %}">
 {% block content %}
 <h2>{% if movie.pk %}Edit Movie{% endif %}</h2>
   <form method="post">

@@ -50,7 +50,9 @@ def logout_view(request):
 
 class MovieListView(ListView):
     model = Movie
-    template_name = 'movies_list.html'  
+    template_name = 'movies_list.html'
+    context_object_name = 'object_list'
+    ordering = ['title']  
 class MovieDetailView(DetailView):
     model = Movie
     template_name = 'movie_detail.html'  

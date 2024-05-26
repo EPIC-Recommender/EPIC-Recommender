@@ -25,13 +25,11 @@ h4 {
     text-shadow: 1px 1px 2px #ccc; 
 }
 
-p {
-    
+p {  
     font-family: "Arial", sans-serif;   
     color: #333; 
     margin: 50px 0; 
     text-shadow: 1px 1px 2px #ccc; 
-
 }
 
 .container {
@@ -59,17 +57,17 @@ p {
 }
 
 .card-title a {
-    color: #007bff; /* Blue link color */
-    text-decoration: none; /* Remove underline */
+    color: #007bff; 
+    text-decoration: none; 
 }
 
 .card-title a:hover {
-    color: #0056b3; /* Darker blue on hover */
-    text-decoration: underline; /* Underline on hover */
+    color: #0056b3; 
+    text-decoration: underline; 
 }
 
 .btn-display-similar {
-    margin-top: 20px; /* Add some margin to the top */
+    margin-top: 20px; 
 }
 
 @media screen and (max-width: 768px) {
@@ -80,5 +78,22 @@ p {
     .models {
         width: 100%;
         margin-bottom: 20px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .container > div {
+        flex: 0 0 calc(33.33% - 20px);
+        margin-right: 20px;
+    }
+
+    .container > div:last-child {
+        margin-right: 0;
     }
 }
