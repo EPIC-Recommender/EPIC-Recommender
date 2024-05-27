@@ -9,6 +9,10 @@ psycopg = "*"
 django-bootstrap5 = "*"
 pytest = "*"
 psycopg2 = "*"
+bs4 = "*"
+requests = "*"
+openai = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

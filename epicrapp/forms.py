@@ -13,7 +13,7 @@ class MovieForm(forms.ModelForm):
             'imdb_rating': forms.NumberInput(attrs={'class': 'form-control'}),
             'rotten_rating': forms.NumberInput(attrs={'class': 'form-control'}),
             'meta_rating': forms.NumberInput(attrs={'class': 'form-control'}),
-            'pg_rating': forms.TextInput(attrs={'class': 'form-control'}),
+            'pg_rating': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
 

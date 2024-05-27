@@ -1,6 +1,0 @@
-ENGINE = 'django.db.backends.postgresql'
-USER ='postgres'
-NAME ='EpicDB'
-PASSWORD ='root'
-HOST ='localhost'
-PORT ='5432'
