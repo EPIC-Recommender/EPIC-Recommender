@@ -4,95 +4,123 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to the E.P.I.C. Recommender</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-</head>
-{% include 'header.html' %}
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Aladin&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  </head>
+  {% include 'header.html' %}
+  <body>
+    <div class="container-fluid main-banner">
+      <div class="row align-items-center">
+        <div class="col m-5">
+          <div class="col">
+            <h1 class="text-start mb-4 mt-4 text-white" style="font-family: ALadin;">Welcome to the E.P.I.C. Recommender</h1>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Welcome to the E.P.I.C. Recommender</h1>
-        
-        <h4 class="text-center mb-4">Discover Any Content Here!</h4>
-        <!-- Button for Movies -->
-        <div class="text-center mb-4">
-            <button class="btn btn-primary btn-lg btn-block" onclick="window.location.href='/movies'">Discover All Movies in Our Database</button>
-        </div>
-
-        <!-- Dropdown for Movie Search -->
-        <div class="form-group">
-            <label for="favoriteMovieSelect">Select a movie to get a similar recommendation:</label>
-            <select class="form-control" id="favoriteMovieSelect">
-                <option value="">-- Select Favorite Movie --</option>
+            <!-- Button for Movies -->
+          </div>
+          <!-- Dropdown for Movie Search -->
+          <div class="row">
+            <div class="form-group text-white" style="width: 365px;">
+              <label class="mb-2" style="font-family: Roboto slab;font-size: 15px;" for="favoriteMovieSelect">Select a movie to get a similar recommendation</label>
+              <select class="form-control" id="favoriteMovieSelect">
+                <option style="font-family: Roboto slab;" value="">-- Select Favorite Movie --</option>
                 {% for movie in movies %}
-                    <option value="{{ movie.pk }}">{{ movie.title }}</option>
+                  <option style="font-family: Roboto slab;" value="{{ movie.pk }}">{{ movie.title }}</option>
                 {% endfor %}
-            </select>
+              </select>
+            </div>
+            <!-- Button to Display Similar Movies -->
+            <div class="mb-4 mt-4">
+              <button class="btn btn-outline-primary text-white btn-display-similar" onclick="showSimilarMovies()">Show Similar Movies</button>
+            </div>
+          </div>
         </div>
-
-
-        <!-- Button to Display Similar Movies -->
-        <div class="text-center mb-4">
-            <button class="btn btn-primary btn-display-similar" onclick="showSimilarMovies()">Show Similar Movies</button>
-        </div>
-
-
-        <!-- Display Similar Movies -->
-        <div id="similarMovies" class="text-center">
+        <div class="col d-inline-flex flex-column align-items-center">
+          <!-- Display Similar Movies -->
+          <div id="similarMovies" class="text-center">
             <!-- Similar movies will be displayed here -->
+            <h3 class="text-white">Recommended Movie:</h3>
+            <div class="movie-card">
+              <div class="pt-3">
+                <p class="text-white" style="font-family: Roboto slab;">Test</p>
+              </div>
+            </div>
+          </div>
         </div>
-        
+        <div class="col">
+          <div class="text-center mb-4">
+            <h3 class="text-center mb-4 mt-4 text-white discover-title" style="font-family: Roboto slab;">Discover Any Content Here!</h3>
+            <button class="btn btn-lg btn-block text-white btn-outline-primary" onclick="window.location.href='/movies'" style="font-family: Roboto slab;">Discover All Movies in Our Database</button>
+          </div>
         </div>
-    
-        <!-- Top 15 Movies of All Time -->
-        <h2 class="text-center mt-5">Top 15 Movies of All Time</h2>
-        <div class="row">
-            {% for movie in top_movies_all_time %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
-                            <p class="card-text">Average Rating: {{ movie.avg_rating }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+      </div>
+    </div>
 
-        <!-- Top 15 Movies of the Year -->
-        <h2 class="text-center mt-5">Top 15 Movies of the Year</h2>
-        <div class="row">
-            {% for movie in top_movies_year %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
-                            <p class="card-text">Average Rating: {{ movie.avg_rating }}</p>
-                        </div>
-                    </div>
+    <!-- Top 15 Movies of All Time -->
+    <div class="row list-section">
+      <div class="col-4 section-movies-1" align="center">
+        <h2 class="text-center mt-5 mb-4 text-white" style="font-family: Roboto slab;font-size: 23px;">Top 15 Movies of All Time</h2>
+        <div class="col">
+          {% for movie in top_movies_all_time %}
+            <div class="col-md-4 w-50">
+              <div class="movie-card">
+                <div class="col">
+                  <h5 class="card-title pt-2 d-flex justify-content-center"><a class="link-underline link-underline-opacity-0 link-secondary text-white" href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
+                  <p class="card-text d-flex justify-content-center" style="font-size: 17px;">
+                    Rating: <i class="bi bi-star-fill px-1 pt-1"></i>{{ movie.avg_rating }}
+                  </p>
                 </div>
-            {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
         </div>
+      </div>
 
-        <!-- Last Added Movies -->
-        <h2 class="text-center mt-5">Last Added Movies</h2>
-        <div class="row">
-            {% for movie in last_added_movies %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
-                            <p class="card-text">Added on: {{ movie.created_at }}</p>
-                        </div>
-                    </div>
+      <!-- Top 15 Movies of the Year -->
+      <div class="col-4" align="center">
+        <h2 class="text-center mt-5 mb-4 text-white" style="font-family: Roboto slab;font-size: 23px;">Top 15 Movies of the Year</h2>
+        <div class="col">
+          {% for movie in top_movies_year %}
+            <div class="col-md-4 w-50">
+              <div class="movie-card">
+                <div class="col">
+                  <h5 class="card-title pt-2 d-flex justify-content-center"><a class="link-underline link-underline-opacity-0 link-secondary text-white" href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
+                  <p class="card-text d-flex justify-content-center" style="font-size: 17px;">
+                    Average Rating: <i class="bi bi-star-fill px-1 pt-1"></i>{{ movie.avg_rating }}
+                  </p>
                 </div>
-            {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
         </div>
+      </div>
+
+      <!-- Last Added Movies -->
+      <div class="col-4 section-movies" align="center">
+        <h2 class="text-center mt-5 mb-4 text-white" style="font-family: Roboto slab;font-size: 23px;">Last Added Movies</h2>
+        <div class="col">
+          {% for movie in last_added_movies %}
+            <div class="col-md-4 w-50">
+              <div class="movie-card">
+                <div class="col">
+                  <h5 class="card-title pt-2 d-flex justify-content-center"><a class="link-underline link-underline-opacity-0 link-secondary text-white" href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
+                  <p class="card-text d-flex justify-content-center" style="font-size: 17px;">Added on: {{ movie.created_at }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -102,83 +130,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script>
- function showSimilarMovies() {
-    const movieId = $('#favoriteMovieSelect').val();
-    if (!movieId) {
-        alert("Please select a movie.");
-        return;
-    }
-
-    $.ajax({
-        url: "{% url 'get_similar_movies' %}",
-        type: "POST",
-        data: {
+      function showSimilarMovies() {
+        const movieId = $('#favoriteMovieSelect').val()
+        if (!movieId) {
+          alert('Please select a movie.')
+          return
+        }
+      
+        $.ajax({
+          url: "{% url 'get_similar_movies' %}",
+          type: 'POST',
+          data: {
             movie_id: movieId,
             csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function(response) {
+          },
+          success: function (response) {
             if (response.movie_info) {
-                const movieInfo = response.movie_info;
-                let movieHtml = "<h4>Recommended Movie:</h4>";
-                movieHtml += `<div class="card mb-3">
+              const movieInfo = response.movie_info
+              let movieHtml = '<h4>Recommended Movie:</h4>'
+              movieHtml += `<div class="card mb-3">
                                   <div class="card-body">
-                                      <p class="card-text">${movieInfo}</p>
+                                    <p class="card-text">${movieInfo}</p>
                                   </div>
-                              </div>`;
-                $('#similarMovies').html(movieHtml);
+                                </div>`
+              $('#similarMovies').html(movieHtml)
             } else if (response.error) {
-                alert(response.error);
+              alert(response.error)
             }
-        },
-        error: function(error) {
-            console.error("Error fetching similar movies:", error);
-            alert("An error occurred. Please try again.");
-        }
-    });
-}
-
-
-        $(document).ready(function() {
-            $('#favoriteMovieSelect').select2({
-                placeholder: 'Search for a movie',
-                allowClear: true,
-                width: '100%'
-            });
-        });
+          },
+          error: function (error) {
+            console.error('Error fetching similar movies:', error)
+            alert('An error occurred. Please try again.')
+          }
+        })
+      }
+      
+      $(document).ready(function () {
+        $('#favoriteMovieSelect').select2({
+          placeholder: 'Search for a movie',
+          allowClear: true,
+          width: '100%'
+        })
+      })
     </script>
-</body>
+  </body>
 </html>
 
+{% comment %}function showSimilarMovies() { const movieId = $('#favoriteMovieSelect').val(); if (!movieId) { alert("Please select a movie."); return; }
 
-{% comment %} function showSimilarMovies() {
-            const movieId = $('#favoriteMovieSelect').val();
-            if (!movieId) {
-                alert("Please select a movie.");
-                return;
-            }
-
-            $.ajax({
-                url: "{% url 'get_similar_movies' %}",
-                type: "POST",
-                data: {
-                    movie_id: movieId,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    if (response.movies) {
-                        let moviesHtml = "<h4>Recommended Movies:</h4>";
-                        response.movies.forEach(function(movie) {
-                            moviesHtml += `<p>${movie.title} (IMDB Rating: ${movie.imdb_rating})</p>`;
-                        });
-                        $('#similarMovies').html(moviesHtml);
-                    } else if (response.error) {
-                        alert(response.error);
-                    }
-                },
-                error: function(error) {
-                    console.error("Error fetching similar movies:", error);
-                    alert("An error occurred. Please try again.");
-                }
-            });
-        }
- {% endcomment %}
+$.ajax({ url: "{% url 'get_similar_movies' %}", type: "POST", data: { movie_id: movieId, csrfmiddlewaretoken: '{{ csrf_token }}' }, success: function(response) { if (response.movies) { let moviesHtml = "<h4>Recommended Movies:</h4>"; response.movies.forEach(function(movie) { moviesHtml += `<p>${movie.title} (IMDB Rating: ${movie.imdb_rating})</p>`; }); $('#similarMovies').html(moviesHtml); } else if (response.error) { alert(response.error); } }, error: function(error) { console.error("Error fetching similar movies:", error); alert("An error occurred. Please try again."); } }); }{% endcomment %}

@@ -12,12 +12,12 @@
     <h4> Click any movie you want to learn more about </h4>
     <!-- Add Movie Button -->
     <div class="add-movie-container">
-        <a href="{% url 'add_movie' %}" class="btn btn-primary">Add Movie</a>
+        <a href="{% url 'add_movie' %}" class="btn btn-outline-primary ">Add Movie</a>
     </div>
     <div class="movies-grid">
         {% for movie in object_list %}
             <div class="movie-item">
-                <a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a>
+                <a class="link-underline link-underline-opacity-0 link-secondary text-white " href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a>
             </div>
         {% endfor %}
     </div>

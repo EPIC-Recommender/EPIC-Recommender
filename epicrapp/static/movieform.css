@@ -1,19 +1,58 @@
 /* movieform.css file */
 
 body {
-    background: linear-gradient(to bottom, #F5DEB3 40%, #FFEFD5);
+    background: linear-gradient(rgb(35, 35, 35), rgb(23, 23, 23));
     min-height: 100vh;
     margin: 0;
-    color: black; 
+    color: black;
 }
 
 h2 {
-    text-align: left; 
-    font-family: "Arial", sans-serif; 
-    font-size: 2.5em; 
-    color: #333; 
-    margin: 30px;  
-    text-shadow: 1px 1px 2px #ccc; 
+    text-align: left;
+    font-family: Roboto slab;
+    font-size: 2.5em;
+    color: rgb(255, 255, 255) !important;
+    margin: 50px 0;
+    text-shadow: 1px 1px 2px #000000;
+    margin: 30px;
+}
+
+form {
+    width: 28rem;
+    height: 37rem;
+    margin: 20px auto;
+    padding: 2rem;
+    background-color: rgb(39, 39, 39);
+    color: rgb(255, 255, 255);;
+    border: 1px solid rgb(49, 49, 49);
+    border-radius: 8px;
+    box-shadow: 0 0px 25px rgba(0, 0, 0, 1);
+    font-family: Roboto slab;
+    font-weight: 400;
+
+    p {
+        font-family: Roboto slab;
+        input[type=text],
+        input[type=number] {
+            border-radius: 7px;
+            outline: none!important;
+            transition: 0.5s;
+            border: 3px solid #ccc!important;
+            color: black;
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+
+        input[type=text],
+        input[type=number]:focus {
+            border: 3px solid #555;
+            background-color: #555;
+            color: white;
+        }
+        label{
+            padding-bottom: 2px;
+        }
+    }
 }
 
 .form-container {
@@ -34,7 +73,7 @@ h2 {
 .form-container form input[type="text"],
 .form-container form input[type="number"],
 .form-container form select {
-    width: calc(100% - 20px); 
+    width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 10px;
 }
@@ -49,9 +88,23 @@ h2 {
     border-radius: 5px;
     text-decoration: none;
     text-align: center;
-    margin: 30px;  
+    margin: 30px;
 }
 
 .form-container form button:hover {
     background-color: #0056b3;
+}
+
+.btn-outline-primary {
+    color: rgb(255, 255, 255) !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-width: 2px !important;
+    border-color: rgb(149, 149, 149) !important;
+}
+
+.btn-outline-primary:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(149, 149, 149) !important;
+    border-color: rgb(149, 149, 149) !important;
 }

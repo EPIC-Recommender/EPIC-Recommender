@@ -1,27 +1,25 @@
-/* movielist.css file */
-
 body {
-    background: linear-gradient(to bottom, #F5DEB3 40%, #FFEFD5);
+    background: linear-gradient(to bottom, #181818 40%, #000000);
     min-height: 100vh;
     margin: 0;
     color: black; 
 }
 
 h1{  text-align: left; 
-    font-family: "Arial", sans-serif; 
+    font-family: Roboto slab;
     font-size: 2.5em; 
-    color: #333; 
+    color: rgb(255, 255, 255)!important; 
     margin: 50px 0; 
-    text-shadow: 1px 1px 2px #ccc; 
-    margin: 30px;  
+    text-shadow: 1px 1px 2px #000000; 
+    margin: 30px;   
  }
 
  h4{  
     text-align: left; 
-    font-family: "Arial", sans-serif; 
-    color: #333; 
+    font-family: Roboto slab; 
+    color: rgb(255, 255, 255)!important; 
     margin: 50px 0; 
-    text-shadow: 1px 1px 2px #ccc; 
+    text-shadow: 1px 1px 2px #000000; 
     margin: 30px;  
  }
 
@@ -41,8 +39,8 @@ h1{  text-align: left;
 }
 
 .movie-item {
-    background-color: #faebd7;
-    color: #29242a;
+    background: rgb(39, 39, 39);
+    color: white;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -76,9 +74,27 @@ h1{  text-align: left;
 .btn-primary:hover {
     background-color: #0056b3;
 }
+.btn-outline-primary {
+    color: rgb(255, 255, 255)!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-width: 2px!important;
+    border-color: rgb(149, 149, 149)!important;
+}
+
+.btn-outline-primary:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(149, 149, 149)!important;
+    border-color: rgb(149, 149, 149)!important;
+}
 
 @media screen and (max-width: 768px) {
     .movies-grid {
         grid-template-columns: repeat(6, 1fr); 
     }
+}
+
+.list-group-item{
+    font-family: Roboto slab;
+
 }

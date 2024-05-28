@@ -1,42 +1,67 @@
-/* moviedetail.css file */
-
 body {
-    background: linear-gradient(to bottom, #F5DEB3 40%, #FFEFD5);
+    background: linear-gradient(to bottom, #181818 40%, #000000);
     min-height: 100vh;
     margin: 0;
     color: black; 
 }
 
-h1 {
-    text-align: center; 
-    font-family: "Arial", sans-serif; 
+h1{  text-align: left; 
+    font-family: Roboto slab;
     font-size: 2.5em; 
-    color: #333; 
+    color: rgb(255, 255, 255)!important; 
+    margin: 50px 0; 
+    text-shadow: 1px 1px 2px #000000; 
+    margin: 30px;   
+ }
+
+ h4{  
+    text-align: left; 
+    font-family: Roboto slab; 
+    color: rgb(255, 255, 255)!important; 
+    margin: 50px 0; 
+    text-shadow: 1px 1px 2px #000000; 
     margin: 30px;  
-    text-shadow: 1px 1px 2px #ccc; 
+ }
+
+ .add-movie-container {
+    text-align: left;
+    margin: 30px; 
 }
 
-.movie-details {
-    max-width: 800px;
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+    max-width: 90%;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
+    padding: 10px;
+    justify-content: center;
+}
+
+.movie-item {
+    background: rgb(39, 39, 39);
+    color: white;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    font-size: 1em;
 }
 
-.movie-details ul {
-    list-style-type: none;
-    padding: 0;
+.movie-item a {
+    color: #00008b; 
+    text-decoration: none;
+    font-size: 1em;
 }
 
-.movie-details li {
-    margin-bottom: 10px;
+.movie-item a:hover {
+    color: #0056b3; 
 }
 
 .btn-primary {
     display: inline-block;
-    margin-top: 20px;
+    margin: 20px 0;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -48,4 +73,28 @@ h1 {
 
 .btn-primary:hover {
     background-color: #0056b3;
+}
+.btn-outline-primary {
+    color: rgb(255, 255, 255)!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-width: 2px!important;
+    border-color: rgb(149, 149, 149)!important;
+}
+
+.btn-outline-primary:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(149, 149, 149)!important;
+    border-color: rgb(149, 149, 149)!important;
+}
+
+@media screen and (max-width: 768px) {
+    .movies-grid {
+        grid-template-columns: repeat(6, 1fr); 
+    }
+}
+
+.list-group-item{
+    font-family: Roboto slab;
+
 }

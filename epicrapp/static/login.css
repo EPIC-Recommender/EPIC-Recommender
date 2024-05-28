@@ -1,0 +1,74 @@
+/* registration.css file */
+
+body {
+    background: linear-gradient(to bottom, #181818 40%, #000000);
+    min-height: 100vh;
+    margin: 0;
+
+}
+
+h1{  text-align: left; 
+    font-family: Roboto slab;
+    font-size: 2.5em; 
+    color: rgb(255, 255, 255)!important; 
+    margin: 50px 0; 
+    text-shadow: 1px 1px 2px #000000; 
+    margin: 30px;  
+ }
+
+form {
+    width: 28rem;
+    height: 8rem;
+    margin: 20px auto;
+    padding: 5rem;
+    background-color: rgb(39, 39, 39); 
+    color: rgb(255, 255, 255);;
+    border: 1px solid rgb(49, 49, 49);
+    border-radius: 8px;
+    box-shadow: 0 0px 25px rgba(0, 0, 0, 1);
+    font-family: Roboto slab;
+    font-weight: 400;
+  }
+  p{
+    padding: 2px;
+   label{
+    padding-left: 2px;
+   }
+   input{
+    border-radius: 7px;
+    outline: none;
+    transition: 0.5s;
+    border: 3px solid #ccc;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+   }
+   input:focus{
+    border: 3px solid #555;
+    background-color: #555;
+    color: white;
+   } 
+  }
+
+  @media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .models {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+.btn-outline-primary {
+    color: rgb(255, 255, 255)!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-width: 2px!important;
+    border-color: rgb(149, 149, 149)!important;
+}
+
+.btn-outline-primary:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(149, 149, 149)!important;
+    border-color: rgb(149, 149, 149)!important;
+}

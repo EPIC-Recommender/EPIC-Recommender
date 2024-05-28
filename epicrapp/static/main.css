@@ -1,99 +1,62 @@
-/* main.css file */
-
-body {
-    background: linear-gradient(to bottom, #F5DEB3 40%, #FFEFD5);
-    min-height: 100vh;
-    margin: 0;
-    color: black; 
+.main-banner {
+    height: 450px;
+    background-repeat: no-repeat;
+    background-position: 0%, 100%;
+    background-size: cover;
+    background-blend-mode: darken;
+    background-image: url('client-dark-vip-cinema-studio.jpg');
 }
 
-h1 {
-    text-align: center; 
-    font-family: "Arial", sans-serif; 
-    font-size: 2.5em; 
-    color: #333; 
-    margin: 50px 0; 
-    text-shadow: 1px 1px 2px #ccc; 
+.form-movie {
+    width: 250px;
 }
 
-h4 {
-    text-align: center; 
-    font-family: "Arial", sans-serif; 
-    font-size: 1.5em; 
-    color: #333; 
-    margin-bottom: 30px; 
-    text-shadow: 1px 1px 2px #ccc; 
+.list-section {
+    background: linear-gradient(rgb(35, 35, 35), rgb(23, 23, 23));
+    
 }
 
-p {  
-    font-family: "Arial", sans-serif;   
-    color: #333; 
-    margin: 50px 0; 
-    text-shadow: 1px 1px 2px #ccc; 
+.btn-outline-primary {
+    color: rgb(149, 149, 149)!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-width: 2px!important;
+    border-color: rgb(149, 149, 149)!important;
+    font-family: Roboto Slab;
 }
 
-.container {
-    max-width: 900px; 
-    margin: 20px auto;
-    padding: 20px;
-    background: linear-gradient(to top, #F5DEB3 80%, #FFEFD5);
-    color: #29242a;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.btn-outline-primary:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(149, 149, 149)!important;
+    border-color: rgb(149, 149, 149)!important;
 }
-
-.btn {
-    margin-bottom: 10px;
+.discover-title{
+    transition: transform 0.3s ease;
+}   
+.discover-title:hover{
+    transform: scale(1.2);
 }
-
-.card {
-    margin-bottom: 20px;
-    background: linear-gradient(to top, #F5DEB3 20%, #FFEFD5);
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+.section-movies{
+    border: 1px solid;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: #212121;
+    box-shadow: -15px 5px 10px rgb(25, 25, 25);
 }
-
-.card-title a {
-    color: #007bff; 
-    text-decoration: none; 
-}
-
-.card-title a:hover {
-    color: #0056b3; 
-    text-decoration: underline; 
-}
-
-.btn-display-similar {
-    margin-top: 20px; 
-}
-
-@media screen and (max-width: 768px) {
-    .wrapper {
-        flex-direction: column;
-    }
-
-    .models {
-        width: 100%;
-        margin-bottom: 20px;
-    }
+.section-movies-1{
+    border: 1px solid;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: #212121;
+    box-shadow: 15px 5px 10px rgb(25, 25, 25);
 }
 
 
-@media (min-width: 768px) {
-    .container {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .container > div {
-        flex: 0 0 calc(33.33% - 20px);
-        margin-right: 20px;
-    }
-
-    .container > div:last-child {
-        margin-right: 0;
-    }
+.movie-card{
+    color: white;
+    background: rgb(39, 39, 39);
+    border-radius: 10px;
+    border: 1px solid rgb(25, 25, 25);
+    box-shadow: 0px 0px 10px rgb(25, 25, 25);
+    margin-bottom: 5px;
 }

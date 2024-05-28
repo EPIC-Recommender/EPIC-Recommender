@@ -5,24 +5,22 @@
 <head>
     <title>{{ object.title }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'movielist.css' %}">
+    <link rel="stylesheet" href="{% static 'moviedetail.css' %}">
 </head>
-<body>
-    <h1>{{ object.title }}</h1>
-    <div>
-        <ul>
-            <li>Movie ID: {{object.ID}}</li>
-            <li>Release Year: {{ object.release_year }}</li>
-            <li>This movie got {{object.rotten_rating}} out of 10 at Beyazperde</li>
-            <li>This movie got {{object.meta_rating}}  out of 5 at Letterbox from users</li>
-            <li>This movie got {{object.imdb_rating}} at IMDB</li>
-            <li>This movie has {{object.pg_rating}} pg rating</li>
+<body class="text-center">
+    <h1 class="text-center">{{ object.title }}</h1>
+    <div class="text-center d-inline-flex flex-column movie-list">
+        <ul class="list-group list-css mb-3">
+            <li class="list-group-item">This movie got {{object.rotten_rating}} out of 10 at Beyazperde</li>
+            <li class="list-group-item">This movie got {{object.meta_rating}}  out of 5 at Letterbox from users</li>
+            <li class="list-group-item">This movie got {{object.imdb_rating}} at IMDB</li>
+            <li class="list-group-item">This movie has {{object.pg_rating}} pg rating</li>
         </ul>
 
         <!-- Conditional display of Edit Movie button -->
         {% if user.is_authenticated %}
             {% if user.is_staff %}
-                <a href="{% url 'edit_movie' pk=object.pk %}" class="btn btn-primary">Edit Movie</a>
+                <a href="{% url 'edit_movie' pk=object.pk %}" class="btn btn-outline-primary">Edit Movie</a>
             {% endif %}
         {% endif %}
     </div>
