@@ -15,12 +15,15 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     nano \
     gunicorn \
+    nginx \
+    supervisor \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Expose PostgreSQL and Django ports
 EXPOSE 5432
-EXPOSE 8000
+EXPOSE 80
+
 USER postgres
 RUN /etc/init.d/postgresql start && \
     psql --command "ALTER USER postgres PASSWORD 'root';" && \
@@ -53,16 +56,8 @@ RUN service postgresql start && \
     . venv/bin/activate && python3 jsonToDB.py
 
 RUN service postgresql start && . venv/bin/activate && python3 manage.py migrate
-# RUN service postgresql start && . venv/bin/activate && python manage.py createsuperuser \
-#     --noinput \
-#     --username=$DJANGO_SUPERUSER_USERNAME \
-#     --email=$DJANGO_SUPERUSER_EMAIL \
-#     --password=$DJANGO_SUPERUSER_PASSWORD \
-# add django super user creation code here
 
-# Optionally, you can add commands to initialize the database, create users, etc.
+COPY nginx.conf /etc/nginx/nginx.conf
+RUN chmod +x start.sh
 
-# Optionally, you can add a command to run your application
-# CMD ["python", "app.py"]
-CMD service postgresql start && . venv/bin/activate && gunicorn --bind 0.0.0.0:8000 epicrproje.wsgi
-
+CMD ["./start.sh"]
