@@ -35,7 +35,7 @@ class Movie(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def average_rating(self):
-        ratings = [self.imdb_rating, self.meta_rating, self.pg_rating, self.rotten_rating*2]
+        ratings = [self.imdb_rating, self.meta_rating, self.pg_rating, self.rotten_rating]
         numeric_ratings = [float(rating) for rating in ratings if rating is not None]  # Convert to float and handle None values
         if numeric_ratings:  # Check if the list is not empty
             return sum(numeric_ratings) / len(numeric_ratings)

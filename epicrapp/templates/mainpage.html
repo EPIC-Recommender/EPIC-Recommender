@@ -46,14 +46,9 @@
         </div>
         <div class="col d-inline-flex flex-column align-items-center">
           <!-- Display Similar Movies -->
-          <div id="similarMovies" class="text-center">
+          <div id="similarMovies" class="text-center" "movie-card">
             <!-- Similar movies will be displayed here -->
-            <h3 class="text-white">Recommended Movie:</h3>
-            <div class="movie-card">
-              <div class="pt-3">
-                <p class="text-white" style="font-family: Roboto slab;">Test</p>
-              </div>
-            </div>
+            
           </div>
         </div>
         <div class="col">
@@ -147,8 +142,8 @@
           success: function (response) {
             if (response.movie_info) {
               const movieInfo = response.movie_info
-              let movieHtml = '<h4>Recommended Movie:</h4>'
-              movieHtml += `<div class="card mb-3">
+              let movieHtml = '<h4></h4>'
+              movieHtml += `<div class="movie-card">
                                   <div class="card-body">
                                     <p class="card-text">${movieInfo}</p>
                                   </div>
