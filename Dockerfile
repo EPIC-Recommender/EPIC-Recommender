@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
     nano \
     gunicorn \
     nginx \
-    supervisor \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
