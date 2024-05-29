@@ -33,13 +33,19 @@ class Movie(models.Model):
     pg_rating = models.CharField(max_length=10, db_column='pg_rating')
     release_year = models.IntegerField(null=True, blank=True) 
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+
     def average_rating(self):
-        ratings = [self.imdb_rating, self.meta_rating, self.pg_rating, self.rotten_rating]
-        numeric_ratings = [float(rating) for rating in ratings if rating is not None]  # Convert to float and handle None values
-        if numeric_ratings:  # Check if the list is not empty
+        ratings = [
+            self.imdb_rating,
+            self.meta_rating * 2 if self.meta_rating is not None else None,
+            self.rotten_rating
+        ]
+        numeric_ratings = [float(rating) for rating in ratings if rating is not None]
+        if numeric_ratings:
             return sum(numeric_ratings) / len(numeric_ratings)
-        return None  # Handle the case where all ratings might be None
+        return None
+
     class Meta:
         db_table = 'movie'
 
