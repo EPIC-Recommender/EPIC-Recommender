@@ -30,7 +30,7 @@
             <a class="nav-link text-white" href="{% url 'home' %}">Main Page</a>
           </li>
 
-          <!-- Login button -->
+{% comment %}           <!-- Login button -->
           <li class="nav-item">
             <a class="nav-link text-white" href="/login">Login</a>
           </li>
@@ -38,7 +38,7 @@
           <!-- Signup button -->
           <li class="nav-item">
             <a class="nav-link text-white" href="/signup">Sign Up</a>
-          </li>
+          </li> {% endcomment %}
         {% endif %}
       </ul>
     </div>
